@@ -1,6 +1,6 @@
 # IARPA-IQ-CSP-Docker
 
-This Docker container (6.1 GB) was built to run the "IARPA-IQ-API" and "IARPA-IQ-CSP-Fusion" repositories for anomaly detection in LTE signals without the need to manually install specific package versions. For more instructions on how to run the "IARPA-IQ-API" Docker, visit [here](https://github.com/genesys-neu/IARPA-IQ-Docker)
+This Docker container (6.1 GB) was built to run the "IARPA-IQ-API" and "IARPA-IQ-CSP-Fusion" repositories for anomaly detection in LTE signals without the need to manually install specific package versions. For more instructions on how to run the "IARPA-IQ-API" docker container or interface, visit [here.](https://github.com/genesys-neu/IARPA-IQ-Docker)
 
 Please send all questions to either gu.je or d.roy {@northeastern.edu}, thanks!
 
