@@ -43,7 +43,7 @@ where ```/home/IARPA-CSP-main/test/CSP``` is the ```<dataset_absolute_image_path
 ```sudo docker run -v /home/jgu1/Downloads/CSP:/home/IARPA-CSP-main/test/CSP iarpa-iq-csp-api /home/IARPA-CSP-main/./run_ML_code.sh```.
 
 ### Acceptable Input File Format
-The code predicts anomalies from the non-conjugate cycle frequency features. The model is trained on the 4th column of the non-conjugate CSP features; it skips the conjugate features; hence, the input files must have ```.NC``` extension. Any file with other extension, e.g., ```.C```, will be skipped. The folder ```CSP_samples```, containing a variety of ```.NC``` and ```.C``` combined LTE+DSSS and only LTE signal files has been provided for your container-testing convenience.
+The code predicts anomalies from the non-conjugate cycle frequency features. The model is trained on the 4th column of the non-conjugate CSP features; it skips the conjugate features; hence, the input files must have ```.NC``` extension. Any file with other extension, e.g., ```.C```, will be skipped. The folder ```CSP_samples```, containing a variety of combined LTE+DSSS and only LTE signal files in ```.NC``` and ```.C``` format, has been provided for your container-testing convenience.
 
 For the input dimensions of each .NC file:
 * The number of rows can be variable (an empty file with zero rows is accepted as well, but the prediction could be wrong).
