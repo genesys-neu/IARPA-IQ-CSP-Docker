@@ -1,89 +1,63 @@
 # IARPA-IQ-CSP-Docker
 
-This Docker container (6.1 GB) was built to run the "IARPA-IQ-API" and "IARPA-IQ-CSP-Fusion" repositories for anomaly detection in LTE signals without the need to manually install specific package versions. For more instructions on how to run the "IARPA-IQ-API" docker container or interface, visit [here.](https://github.com/genesys-neu/IARPA-IQ-Docker)
+This Docker container (6.1 GB) was built to run the "IARPA-IQ-API" and "IARPA-IQ-CSP-Fusion" repositories for anomaly detection in LTE signals without the need to manually install specific package versions. For more instructions on how to run the "IARPA-IQ-API" Docker container or interface, visit [here.](https://github.com/genesys-neu/IARPA-IQ-Docker)
 
 Please send all questions to either gu.je or d.roy {@northeastern.edu}, thanks!
 
 # Contents
 * [Pre-requisites](#pre-requisites)
 * [Instructions for Users](#instructions-for-users)
-  * [Running the IQ API](#running-the-iq-api)
-* [Instructions for Developers](#instructions-for-developers)
+  * [Running the CSP API](#running-the-csp-api)
+  * [Acceptable Input File Format](#acceptable-input-file-format)
 * [Appendix](#appendix)
-  * [Troubleshooting](#troubleshooting)
 
 ## Pre-requisites
 Install Docker engine/app for your specific operating system [here.](https://docs.docker.com/engine/install/)  
-Install the IARPA-IQ-YOLO Docker container [here.](https://drive.google.com/file/d/1HXT34Tg025ZoKA0St3rQRvk-ZjzlbvpQ/view?usp=sharing)
+Install the IARPA-IQ-CSP-Fusion Docker container [here.](https://drive.google.com/file/d/1aB3Prg46CvBYRVnVaSVpbc0bgE1hVda9/view?usp=sharing)
 
 ## Instructions for Users
 
 To load the Docker container, go to the directory where the container is and use the following command:
 ~~~
-sudo cat iarpa-iq-api.tar | sudo docker import - iarpa-iq-api
+sudo cat iarpa-iq-csp-api.tar | sudo docker import - iarpa-iq-csp-api
 ~~~
 To verify that the container was loaded successfully, do:
 ~~~
 sudo docker images
 ~~~
-which should display something like the following, with the ```iarpa-iq-api``` image:
+which should display something like the following, with the ```iarpa-iq-csp-api``` image:
 ~~~
-REPOSITORY      TAG       IMAGE ID       CREATED        SIZE
-iarpa-iq-api   latest    d71ed07d1bc6   36 hours ago   4.2GB
+REPOSITORY         TAG       IMAGE ID       CREATED        SIZE
+iarpa-iq-csp-api   latest    d71ed07d1bc6   36 hours ago   4.2GB
 ~~~
-### Running the IQ API  
+
+### Running the CSP API  
 This image comes with folders and folder paths hard-coded for convenience. To run the image with the desired dataset, run
 ~~~
 sudo docker run -v \
 <dataset_absolute_local_path>:\
-/home/IARPA-IQ-API-main/data iarpa-iq-api \
-/home/IARPA-IQ-API-main/./run_ML_code.sh
+/home/IARPA-CSP-main/test/CSP iarpa-iq-csp-api \
+/home/IARPA-CSP-main/./run_ML_code.sh
 ~~~
-where ```/home/IARPA-IQ-API-main/data``` is the ```<dataset_absolute_image_path>```. The input data files may be any binary files containing alternating I and Q samples in a single column, i.e., vector of shape (# of total samples x 1), with at least **256** data samples per file. An example of this command is  
-```sudo docker run -v /home/jgu1/data:/home/IARPA-IQ-API-main/data iarpa-iq-api /home/IARPA-IQ-API-main/./run_ML_code.sh```. The ```-v``` flag mounts the dataset to the image without needing to copy the dataset into the image. This runs the IQ-API while printing out predictions, given as (file:prediction), to the terminal without entering the image itself.
+where ```/home/IARPA-CSP-main/test/CSP``` is the ```<dataset_absolute_image_path>```. An example of this command is  
+```sudo docker run -v /home/jgu1/Downloads/CSP:/home/IARPA-CSP-main/test/CSP iarpa-iq-csp-api /home/IARPA-CSP-main/./run_ML_code.sh```.
 
-Note: Currently, this docker is being designed for use with binary ```.tim``` files, which specify the size of the data array within each file in the first two elements of the array. Though this container should generate predictions if there are at least 256 samples in each input file, the **first two samples in each data file will not be used towards generating predictions.**
+### Acceptable Input File Format
+The model is trained on the 4th column of the non-conjugate CSP features; it skips the conjugate features. The code predicts anomalies from the non-conjugate cycle frequency features, hence, the input files must have '.NC' extension. Any file with other extension will be skipped.
 
-[Back to Contents](#contents)
-## Instructions for Developers
-To run the image without mounting a dataset (i.e., for file exploration), run
-~~~
-sudo docker run -it iarpa-iq-api bash
-~~~
-The ```bash``` signifies that you want the image to open with a bash interface. You may ```exit``` at any time to exit the image. Note that instances and changes are not automatically saved and will be deleted once exiting the image. You may run the API while in the image by navigating to ```/home/IARPA-IQ-API-main``` and running ```./run_ML_code.sh```.
+The input dimension of each .NC file:
+* number of rows can be variable (an empty file with zero rows is accepted as well, but the prediction could be wrong).
+* The number of columns must be 4 following the sequence of F, A, C, S.
 
-To copy a local dataset, folder, or file to the image, run
+## Example Output:
 ~~~
-sudo docker cp ~/<local path to file/folder> <container ID>:<image path>
-~~~
-where ```<image path>``` may be ```/home``` for simplicity.  
-An example usage would be ```sudo docker cp ~/Downloads/IARPA-IQ-API-main d71ed07d1bc6:/home```.
+The prediction from CSP features in OnlyLTE_frame_120_131072_3.NC is: OnlyLTE
+Total time of execution for OnlyLTE_frame_120_131072_3.NC is : 0.002008676528930664 seconds.
 
-You may remove and edit files within the image. However, please note that if a dataset is mounted to the image while it is running, **deleting the folder containing the dataset within the image will delete the dataset on the local device.**
+The prediction from CSP features in Combined_LTE_DSSS_frame_127_262144_4.NC is: Combined_LTE_DSSS
+Total time of execution for Combined_LTE_DSSS_frame_127_262144_4.NC is : 0.002009153366088867 seconds.
+~~~
 
-To save a version of the image, obtain the container ID, e.g., ```1c7c465972ad``` from ```root@1c7c465972ad:/#``` while running an image. You may also open up a new terminal interface and run
-~~~
-sudo docker ps -a
-~~~
-to obtain the container ID of all images (timestamped by creation time and status), and then run
-~~~
-sudo docker commit <container ID> <new image name>
-~~~
-to save the current version. You may add a descriptive tag to <new image name> via
-semicolon, e.g., iarpa-iq-yolo:v2, and so on.
-
-To remove the current version of the image, run
-~~~
-sudo docker rmi iarpa-iq-api
-~~~
-You may add a time limit for removal, e.g., ```docker image prune --filter "until=24h"``` to remove all containers/images older than 24 hours.
- 
-Finally, to export the container to a .tar or .tar.gz file for transfering the image, obtain the generated name of the container instance from  
-```sudo docker ps -a```, e.g., ```beautiful_banzai```, and run:
-~~~
-sudo docker export <name> > <file.tar>
-~~~
-to store it as a .tar file for sharing. As an example, ```sudo docker export beautiful_banzai > iarpa-iq-yolo.tar```.  
 [Back to Contents](#contents)
 
 ## Appendix
@@ -102,13 +76,5 @@ glob2 0.7
 Setuptools 60.9.3
 pandas 1.4.1
 ~~~
-
-### Troubleshooting
-
-If the container comes in a .tar.gz format, you can try
-~~~
-sudo cat iarpa-iq-api.tar.gz | sudo docker import - iarpa-iq-api
-~~~
-to load the container. If you are using a NVIDIA GPU, you can access the installation guide for their container toolkit [here](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/install-guide.html) in order for the Docker to detect your NVIDIA GPU.
  
 [Back to Contents](#contents)
