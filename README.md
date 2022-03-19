@@ -43,13 +43,13 @@ where ```/home/IARPA-CSP-main/test/CSP``` is the ```<dataset_absolute_image_path
 ```sudo docker run -v /home/jgu1/Downloads/CSP:/home/IARPA-CSP-main/test/CSP iarpa-iq-csp-api /home/IARPA-CSP-main/./run_ML_code.sh```.
 
 ### Acceptable Input File Format
-The model is trained on the 4th column of the non-conjugate CSP features; it skips the conjugate features. The code predicts anomalies from the non-conjugate cycle frequency features, hence, the input files must have '.NC' extension. Any file with other extension will be skipped.
+The code predicts anomalies from the non-conjugate cycle frequency features. The model is trained on the 4th column of the non-conjugate CSP features; it skips the conjugate features; hence, the input files must have '.NC' extension. Any file with other extension, e.g., '.C' will be skipped. The folder 'CSP_samples', containing a variety of .NC and .C files for combined LTE+DSSS and only LTE signals has been provided for your testing convenience.
 
-The input dimension of each .NC file:
-* number of rows can be variable (an empty file with zero rows is accepted as well, but the prediction could be wrong).
+For the input dimensions of each .NC file:
+* The number of rows can be variable (an empty file with zero rows is accepted as well, but the prediction could be wrong).
 * The number of columns must be 4 following the sequence of F, A, C, S.
 
-## Example Output:
+### Example Output:
 ~~~
 The prediction from CSP features in OnlyLTE_frame_120_131072_3.NC is: OnlyLTE
 Total time of execution for OnlyLTE_frame_120_131072_3.NC is : 0.002008676528930664 seconds.
