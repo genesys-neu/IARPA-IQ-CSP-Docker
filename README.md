@@ -47,7 +47,7 @@ The code predicts anomalies from the non-conjugate cycle frequency features. The
 
 For the input dimensions of each .NC file:
 * The number of rows can be variable (an empty file with zero rows is accepted as well, but the prediction could be wrong).
-* The number of columns must be 4 following the sequence of F, A, C, S.
+* The number of columns must be 4, following the sequence of F, A, C, S.
 
 ### Example Output
 ~~~
