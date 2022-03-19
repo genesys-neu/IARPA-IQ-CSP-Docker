@@ -27,8 +27,8 @@ sudo docker images
 ~~~
 which should display something like the following, with the ```iarpa-iq-csp-api``` image:
 ~~~
-REPOSITORY         TAG       IMAGE ID       CREATED        SIZE
-iarpa-iq-csp-api   latest    d71ed07d1bc6   36 hours ago   4.2GB
+REPOSITORY         TAG         IMAGE ID       CREATED         SIZE
+iarpa-iq-csp-api   latest      2ef151bf5f13   5 hours ago     6.87GB
 ~~~
 
 ### Running the CSP API  
@@ -49,7 +49,7 @@ For the input dimensions of each .NC file:
 * The number of rows can be variable (an empty file with zero rows is accepted as well, but the prediction could be wrong).
 * The number of columns must be 4 following the sequence of F, A, C, S.
 
-### Example Output:
+### Example Output
 ~~~
 The prediction from CSP features in OnlyLTE_frame_120_131072_3.NC is: OnlyLTE
 Total time of execution for OnlyLTE_frame_120_131072_3.NC is : 0.002008676528930664 seconds.
