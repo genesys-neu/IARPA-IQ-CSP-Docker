@@ -13,7 +13,7 @@ Please send all questions to either gu.je or d.roy {@northeastern.edu}, thanks!
 
 ## Pre-requisites
 Install Docker engine/app for your specific operating system [here.](https://docs.docker.com/engine/install/)  
-Install the IARPA-IQ-CSP-Fusion Docker container [here.](https://drive.google.com/file/d/1aB3Prg46CvBYRVnVaSVpbc0bgE1hVda9/view?usp=sharing)
+Install the IARPA-IQ-CSP-Fusion container [here.](https://drive.google.com/file/d/1aB3Prg46CvBYRVnVaSVpbc0bgE1hVda9/view?usp=sharing)
 
 ## Instructions for Users
 
